@@ -1,0 +1,90 @@
+@import '../../styles//constants.scss';
+
+.nofound {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%; //used to remove extra space
+  position: relative;
+  background-color: #0b0b0b;
+
+  .wrapper {
+    padding: 40px 90px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    @media(max-width:$md){
+      padding:40px;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    img {
+      height: 25px;
+      margin-right: 40px;
+      
+    }
+  }
+
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    // padding-top: 100px;
+    @media (max-width:$md){
+      padding-top: 100px;
+      margin:40px;
+      
+    }
+
+    .notfoundImg {
+      height: 35%;
+      width: 40%;
+      @media (max-width:$md){
+        height: 50%;
+        width: 50%;
+      }
+    }
+    h1{
+      margin: 0px;
+    }
+    // p{
+    //   margin :0px;
+    // }
+
+    .registerButton {
+      flex: 3;
+      height: 100%;
+      background-color: white;
+      border: none;
+      color: var(--main-color);
+      font-size: 22px;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: all smooth 400ms;
+
+      span {
+        padding-left: 10px;
+      }
+
+      @media (max-width:$md){
+        margin-top: 50px;
+      }
+
+      &:hover{  
+        // transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+  }
+
+}

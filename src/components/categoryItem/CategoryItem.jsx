@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import css from './category.module.scss'
 import { Add, ArrowBackIosOutlined, ArrowForwardIosOutlined, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined } from "@material-ui/icons"
 import { Link } from "react-router-dom"
@@ -8,6 +8,8 @@ const base_url = "https://image.tmdb.org/t/p/original"
 function CategoryItem(props) {
     const [moviesList, setMoviesList] = useState([])
     const [isHovered, setIsHovered] = useState(false);
+    const [isRightMoved, setIsRightMoved] = useState(false)
+    const [isLeftMoved,setIsLeftMoved] = useState(false)
 
     const listRef = useRef();
     const trailer =
@@ -24,8 +26,22 @@ function CategoryItem(props) {
         fetchData();
     }, [])
 
-    function handleClick(movie) {
-        console.log("movie cliked")
+    function handleClick(direction) {
+        setIsRightMoved(true)
+
+        let distance = listRef.current.getBoundingClientRect().x - 50;
+        // console.log(distance)
+        // if(distance>100){
+        //     setIsRightMoved(true)
+        // }else{
+        //     setIsRightMoved(false)
+        // }
+        if(direction=="right"){
+            listRef.current.style.transform = `translateX(${-230 + distance}px)`
+        }
+        if(direction=="left"){
+            listRef.current.style.transform = `translateX(${230 + distance}px)`
+        }
     }
 
     function handleAddToFav(movie) {
@@ -52,48 +68,50 @@ function CategoryItem(props) {
     return (
         <div className={`${css.container}`}>
             <h1 className={`${css.categoryTitle}`}>{props.title}</h1>
-            <ArrowBackIosOutlined
-                className="sliderArrow left"
-                onClick={() => handleClick("left")}
-                style={{ display: !isMoved && "none" }}
-            />
-            <div ref={listRef} className={`${css.posters}`}>
+            <div className={`${css.wrapper}`}>
+                <ArrowBackIosOutlined
+                    className={`${css.sliderArrow} ${css.left}`}
+                    onClick={() => handleClick("left")}
+                    style={{ display: !isRightMoved && "none", cursor: 'pointer' }}
+                />
+                <div ref={listRef} className={`${css.posters}`}>
 
-                {moviesList.map((movie) => {
-                    return <div onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)} className={props.isLargeCategory ? `${css.posterLargeImage}` : `${css.posterLargeImage}`}>
-                        <img src={`${base_url}${props.isLargeCategory ? movie.poster_path : movie.backdrop_path}`}
-                            // onClick={() => handleClick(movie)}
-                            alt={movie.name}
-                            key={movie.id} />
-                        {isHovered && <>
-                            {/* <video src={trailer} autoPlay={true} loop /> */}
-                            <div className={`${css.itemInfo}`}>
-                                <div className={`${css.icons}`}>
-                                    <Link to="/watch"><PlayArrow className={`${css.icon}`} /></Link>
-                                    <Add className={`${css.icon}`} onClick={() => handleAddToFav(movie)} />
-                                    <ThumbUpAltOutlined className={`${css.icon}`} />
-                                    <ThumbDownOutlined className={`${css.icon}`} />
+                    {moviesList.map((movie) => {
+                        return <div onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)} className={props.isLargeCategory ? `${css.posterLargeImage}` : `${css.posterLargeImage}`}>
+                            <img src={`${base_url}${props.isLargeCategory ? movie.poster_path : movie.backdrop_path}`}
+                                // onClick={() => handleClick(movie)}
+                                alt={movie.name}
+                                key={movie.id} />
+                            {isHovered && <>
+                                {/* <video src={trailer} autoPlay={true} loop /> */}
+                                <div className={`${css.itemInfo}`}>
+                                    <div className={`${css.icons}`}>
+                                        <Link to="/watch"><PlayArrow className={`${css.icon}`} /></Link>
+                                        <Add className={`${css.icon}`} onClick={() => handleAddToFav(movie)} />
+                                        <ThumbUpAltOutlined className={`${css.icon}`} />
+                                        <ThumbDownOutlined className={`${css.icon}`} />
+                                    </div>
+                                    <div className={`${css.itemInfoTop}`}>
+                                        <span>1 hour 14 mins</span>
+                                        <span className={`${css.limit}`}>+16</span>
+                                        <span>{movie.release_date && movie.release_date.split("-")[0]}</span>
+                                    </div>
+                                    <div className={`${css.desc}`}>
+                                        {movie.overview.length > 100 ? movie.overview.slice(0, 100) + "..." : movie.overview}
+                                    </div>
+                                    <div className={`${css.genre}`}>{props.title}</div>
                                 </div>
-                                <div className={`${css.itemInfoTop}`}>
-                                    <span>1 hour 14 mins</span>
-                                    <span className={`${css.limit}`}>+16</span>
-                                    <span>{movie.release_date && movie.release_date.split("-")[0]}</span>
-                                </div>
-                                <div className={`${css.desc}`}>
-                                    {movie.overview.length > 100 ? movie.overview.slice(0, 100) + "..." : movie.overview}
-                                </div>
-                                <div className={`${css.genre}`}>{props.title}</div>
-                            </div>
-                        </>}
-                    </div>
-                })}
+                            </>}
+                        </div>
+                    })}
 
+                </div>
+                <ArrowForwardIosOutlined
+                    className={`${css.sliderArrow} ${css.right}`}
+                    onClick={() => handleClick("right")}
+                />
             </div>
-            <ArrowForwardIosOutlined
-                className="sliderArrow right"
-                onClick={() => handleClick("right")}
-            />
         </div>
     )
 }

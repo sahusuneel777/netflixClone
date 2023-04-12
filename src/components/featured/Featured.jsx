@@ -3,6 +3,7 @@ import './featured.css'
 import axios from 'axios'
 import api from '../api/api'
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
+import { Link } from 'react-router-dom';
 const TMD_API = "https://api.themoviedb.org/3"
 
 
@@ -34,11 +35,11 @@ function Featured() {
                 <h1 className="banner-title">
                     {featuredMovie?.title || featuredMovie?.name || featuredMovie?.originam_name}
                 </h1>
+                <h1 className="banner-description">{truncate(featuredMovie?.overview, 150)}</h1>
                 <div className="banner-buttons">
-                    <div className="banner-button"><PlayArrow />  Play</div>
+                    <Link style={{textDecoration:'none'}} to="/watch"><div className="banner-button"><PlayArrow />  Play</div></Link>
                     <div className="banner-button"><InfoOutlined />  Info</div>
                 </div>
-                <h1 className="banner-description">{truncate(featuredMovie?.overview, 150)}</h1>
             </div>
         </header>
     )

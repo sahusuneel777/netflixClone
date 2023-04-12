@@ -5,7 +5,7 @@ import api from "../../components/api/api";
 import CategoryItem from "../../components/categoryItem/CategoryItem";
 
 const categoriesList = [
-    { title: "NETFLIX Originals", fetchUrl: `${api.fetchNetflixOriginals}` },
+    // { title: "NETFLIX Originals", fetchUrl: `${api.fetchNetflixOriginals}` },
     { title: "Trending", fetchUrl: `${api.fetchTrending}` },
     { title: "Top Rated", fetchUrl: `${api.fetchTopRated}` },
     { title: "Action", fetchUrl: `${api.fetchActionMovies}` },
@@ -22,9 +22,11 @@ function Home() {
             <Featured />
 
             {/* categories */}
+            <CategoryItem key={0} title="NETFLIX Originals" isLargeCategory={true} fetchUrl={api.fetchNetflixOriginals} />
+
 
             {categoriesList.map((category, cKey) => {
-                return <CategoryItem key={cKey} title={category.title} isLargeCategory={category.title === "NETFLIX Originals" ? true : false} fetchUrl={category.fetchUrl} />
+                return <CategoryItem key={cKey+1} title={category.title} isLargeCategory={category.title === "NETFLIX Originals" ? true : false} fetchUrl={category.fetchUrl} />
             })}
         </div>
     )
