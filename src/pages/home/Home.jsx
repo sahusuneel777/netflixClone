@@ -1,7 +1,7 @@
 import Navbar from "../../components/navbar/Navbar";
 import Featured from '../../components/featured/Featured';
 import css from "./home.module.scss";
-import api from "../../components/api/api";
+import {api} from "../../components/api/api";
 import CategoryItem from "../../components/categoryItem/CategoryItem";
 
 const categoriesList = [

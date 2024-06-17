@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './featured.css'
 import axios from 'axios'
-import api from '../api/api'
+import {api} from '../api/api'
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
 import { Link } from 'react-router-dom';
 const TMD_API = "https://api.themoviedb.org/3"

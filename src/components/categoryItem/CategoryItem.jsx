@@ -1,15 +1,24 @@
 import axios from "axios"
 import { useEffect, useRef, useState } from "react"
+
 import css from './category.module.scss'
-import { Add, ArrowBackIosOutlined, ArrowForwardIosOutlined, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined } from "@material-ui/icons"
-import { Link } from "react-router-dom"
+import { Add, ArrowBackIosOutlined,Facebook,Twitter,Instagram,LinkedIn, ArrowForwardIosOutlined, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined } from "@material-ui/icons"
+import { Link, useNavigate } from "react-router-dom"
 const TMD_API = "https://api.themoviedb.org/3"
 const base_url = "https://image.tmdb.org/t/p/original"
+// const API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZWFlYzlhNTQ5NDBhYWFjNGEzODJmMDg1MmYzNjE1NSIsInN1YiI6IjY0MzJiMjA1MzEwMzI1MDEyNjk3YTVjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.o-uOWyHUK35ARNZIdITRprT2lCL9H3NX55cM_xKa05I'
+// const mediaType = 'movie'
 function CategoryItem(props) {
     const [moviesList, setMoviesList] = useState([])
     const [isHovered, setIsHovered] = useState(false);
     const [isRightMoved, setIsRightMoved] = useState(false)
-    const [isLeftMoved,setIsLeftMoved] = useState(false)
+    const [isLeftMoved, setIsLeftMoved] = useState(false)
+    const navigate = useNavigate();
+
+
+    // const headers = {
+    //     Authorization: "bearer " + API_TOKEN,
+    // }
 
     const listRef = useRef();
     const trailer =
@@ -30,18 +39,23 @@ function CategoryItem(props) {
         setIsRightMoved(true)
 
         let distance = listRef.current.getBoundingClientRect().x - 50;
-        // console.log(distance)
-        // if(distance>100){
-        //     setIsRightMoved(true)
-        // }else{
-        //     setIsRightMoved(false)
-        // }
-        if(direction=="right"){
+        if (direction == "right") {
             listRef.current.style.transform = `translateX(${-230 + distance}px)`
         }
-        if(direction=="left"){
+        if (direction == "left") {
             listRef.current.style.transform = `translateX(${230 + distance}px)`
         }
+        // const container = listRef.current;
+
+        // const scrollAmount =
+        //     direction === "left"
+        //         ? container.scrollLeft - (container.offsetWidth + 20)
+        //         : container.scrollLeft + (container.offsetWidth + 20);
+
+        // container.scrollTo({
+        //     left: scrollAmount,
+        //     behavior: "smooth",
+        // });
     }
 
     function handleAddToFav(movie) {
@@ -80,7 +94,7 @@ function CategoryItem(props) {
                         return <div onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)} className={props.isLargeCategory ? `${css.posterLargeImage}` : `${css.posterLargeImage}`}>
                             <img src={`${base_url}${props.isLargeCategory ? movie.poster_path : movie.backdrop_path}`}
-                                // onClick={() => handleClick(movie)}
+                                onClick={() => navigate(`/${movie.media_type}/${movie.id}`)}
                                 alt={movie.name}
                                 key={movie.id} />
                             {isHovered && <>

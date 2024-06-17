@@ -1,0 +1,92 @@
+@import '../../styles/constants.scss';
+
+.wrapper {
+    width: 100vw;
+    height: 30vh;
+    max-width: 100%; //used to remove extra spaces
+
+    // background-color: var(--main-color);
+    .container {
+        .sectionHeading {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+
+
+        // padding: 100px 120px;
+        .castSkeleton {
+            display: flex;
+            gap: 3rem;
+
+            .skItem {
+                .circleSkeleton {
+                    width: 150px;
+                    height: 150px;
+                    margin-bottom: 15px;
+                    background-color: $secondary;
+                    border-radius: 50%;
+                }
+
+                .rowSkeleton {
+                    width: 125px;
+                    height: 20px;
+                    margin-bottom: 1rem;
+                    background-color: $secondary;
+
+
+                }
+
+                .row2Skeleton {
+                    width: 90px;
+                    height: 20px;
+                    background-color: $secondary;
+
+
+                }
+            }
+
+
+        }
+
+        .listItems {
+            display: 'flex';
+            flex-direction: row;
+            justify-content: flex-start;
+
+            .listItem {
+                display: flex;
+                flex-direction: column;
+                color: white;
+                // width:250px;
+                // margin:0;
+
+                .profileImg {
+                    width: 150px;
+                    height: 150px;
+                    margin-bottom: 15px;
+                    background-color: $secondary;
+                    border-radius: 50%;
+                    display: block;
+
+                }
+
+                .castName {
+                    width: 125px;
+                    height: 20px;
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 600;
+                }
+
+                .castoriginalName {
+                    width: 125px;
+                    height: 20px;
+                    font-size: 14px;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+}
